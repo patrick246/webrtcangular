@@ -1,0 +1,16 @@
+{
+  "name": "webrtcangular",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "patrick246",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.4.7",
+    "express": "^4.13.3",
+    "livereload": "^0.3.7"
+  }
+}

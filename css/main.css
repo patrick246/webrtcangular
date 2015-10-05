@@ -1,0 +1,33 @@
+.sidenav-backdrop
+{
+    background: url("../img/sidenav_bg_flipped.jpg") top left / cover;
+    height: 148px;
+}
+.sidenav-backdrop div
+{
+    background-color: transparent;
+    color: white;
+    margin: 0 16px 0 16px;
+    text-transform: none;
+}
+
+.sidenav-backdrop .user-info__fullname
+{
+    font-weight: bold;
+}
+
+.sidenav-backdrop div md-icon
+{
+    cursor: pointer;
+    margin: 0;
+    color: white;
+}
+
+
+button.user-bg
+{
+    margin: 16px;
+    background-size: cover;
+    background-position: center;
+    background-color: transparent !important;
+}
