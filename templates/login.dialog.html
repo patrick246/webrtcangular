@@ -1,0 +1,22 @@
+<md-dialog layout layout-padding>
+    <form layout-padding name="loginForm">
+        <md-input-container>
+            <label for="username">
+                Username
+            </label>
+            <input id="username" name="username" type="text" ng-model="username" required>
+            <div ng-messages="loginForm.username.$error">
+                <div ng-message="required">You need to enter an username.</div>
+            </div>
+        </md-input-container>
+        <md-input-container>
+            <label for="password">
+                Password
+            </label>
+            <input id="password" type="password" ng-model="password" required>
+        </md-input-container>
+        <md-button ng-click="onSubmit($event)">
+            <p>Submit</p>
+        </md-button>
+    </form>
+</md-dialog>
