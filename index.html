@@ -23,11 +23,11 @@
     <script src="js/sidenav-module/controller/SideNavCtrl.js"></script>
     <script src="js/sidenav-module/controller/UserInfoCtrl.js"></script>
 
-    <script src="js/contact-module/index.js"></script>
-    <script src="js/contact-module/services/index.js"></script>
-    <script src="js/contact-module/services/ContactListProvider.js"></script>
-    <script src="js/contact-module/controllers/index.js"></script>
-    <script src="js/contact-module/controllers/ContactListCtrl.js"></script>
+    <script src="js/chat-module/index.js"></script>
+    <script src="js/chat-module/services/index.js"></script>
+    <script src="js/chat-module/services/ChatListProvider.js"></script>
+    <script src="js/chat-module/controllers/index.js"></script>
+    <script src="js/chat-module/controllers/ChatListCtrl.js"></script>
 
     <script src="js/app.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,7 +53,7 @@
     <div layout="row" flex>
         <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
             <div class="sidenav-backdrop" layout="column" layout-align="space-between" ng-controller="UserInfoCtrl">
-                <md-button class="md-fab user-bg" style="background-image: url({{usermanager.userdata.avatar}})">
+                <md-button class="md-fab user-bg" style="background-image: url({{usermanager.userdata.avatar}})" aria-label="Profilfoto">
                 </md-button>
 
                 <div layout-padding layout="row" layout-align="space-between center"  ng-if="usermanager.is_logged_in">

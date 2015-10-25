@@ -1,0 +1,17 @@
+<md-content>
+    <md-list>
+        <md-list-item class="md-2-line" ng-repeat="entry in contacts" ng-click="open_chat(entry.id)">
+            <img src="{{entry.avatar}}" class="md-avatar" alt="{{entry.firstname}}">
+            <div class="md-list-item-text">
+                <h3 ng-if="!entry.is_group">{{entry.firstname}} {{entry.lastname}}</h3>
+                <h3 ng-if="entry.is_group">{{entry.group_name}}</h3>
+                <p>
+                    <span ng-if="entry.is_group">{{entry.firstname}}: </span>
+                    {{entry.last_message}}
+                </p>
+            </div>
+            <md-icon md-font-icon="material-icons" ng-click="">phone</md-icon>
+            <md-icon md-font-icon="material-icons">videocam</md-icon>
+        </md-list-item>
+    </md-list>
+</md-content>

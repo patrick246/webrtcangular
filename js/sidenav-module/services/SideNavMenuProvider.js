@@ -24,7 +24,7 @@ angular.module('de.patrick246.webrtc.modules.sidenav.services')
 					text: 'Chats',
 					onclick: function()
 					{
-						$location.path('/chat');
+						$location.path('/chats');
 					}
 				},
 				{

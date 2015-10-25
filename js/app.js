@@ -1,7 +1,7 @@
 /**
  * Created by Patrick on 01.10.2015.
  */
-angular.module('de.patrick246.webrtc', ['ngMaterial', 'ngRoute', 'ngMessages', 'de.patrick246.webrtc.modules.login', 'de.patrick246.webrtc.modules.sidenav'])
+angular.module('de.patrick246.webrtc', ['ngMaterial', 'ngRoute', 'ngMessages', 'de.patrick246.webrtc.modules.login', 'de.patrick246.webrtc.modules.sidenav', 'de.patrick246.webrtc.modules.chats'])
 	.config(function ($routeProvider)
 	{
 		$routeProvider

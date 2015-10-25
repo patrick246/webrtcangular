@@ -31,3 +31,8 @@ button.user-bg
     background-position: center;
     background-color: transparent !important;
 }
+
+.md-list-item-text
+{
+    text-overflow: ellipsis;
+}
