@@ -1,0 +1,1 @@
+angular.module('de.patrick246.webrtc.modules.sidenav', ['de.patrick246.webrtc.modules.sidenav.controller', 'ngMaterial', 'de.patrick246.webrtc.modules.login.services']);
