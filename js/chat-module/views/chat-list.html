@@ -1,6 +1,15 @@
-<md-content>
+<md-content layout-padding>
+    <form>
+        <md-input-container>
+            <label for="search">
+                <md-icon md-font-icon="material_icons">search</md-icon>
+                Search
+            </label>
+            <input id="search" ng-model="search" />
+        </md-input-container>
+    </form>
     <md-list>
-        <md-list-item class="md-2-line" ng-repeat="entry in contacts" ng-click="open_chat(entry.id)">
+        <md-list-item class="md-2-line" ng-repeat="entry in contacts | filter:list_search" ng-click="open_chat(entry.id)">
             <img src="{{entry.avatar}}" class="md-avatar" alt="{{entry.firstname}}">
             <div class="md-list-item-text">
                 <h3 ng-if="!entry.is_group">{{entry.firstname}} {{entry.lastname}}</h3>

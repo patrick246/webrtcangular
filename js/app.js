@@ -6,7 +6,7 @@ angular.module('de.patrick246.webrtc', ['ngMaterial', 'ngRoute', 'ngMessages', '
 	{
 		$routeProvider
 			.when('/', {
-				template: 'Hello World',
+				template: 'Default page',
 				controller: 'AppCtrl'
 			})
 			.otherwise({

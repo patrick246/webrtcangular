@@ -38,5 +38,21 @@ angular.module('de.patrick246.webrtc.modules.login', ['ngMaterial', 'de.patrick2
 			})
 			.when('/login/failed', {
 				template: 'Login failed'
+			})
+			.when('/logout', {
+				template: '&nbsp;',
+				controller: function () {},
+				resolve:
+				{
+					data1: function ($mdToast, UserManager, SideNavMenuProvider)
+					{
+						UserManager.logout();
+						SideNavMenuProvider.change_set('visitor');
+						return $mdToast.show($mdToast.simple().content('Logging you out')).then(function ()
+						{
+							$location.path('/');
+						});
+					}
+				}
 			});
 	});

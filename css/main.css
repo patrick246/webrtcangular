@@ -36,3 +36,8 @@ button.user-bg
 {
     text-overflow: ellipsis;
 }
+
+.md-accent.md-hue-1
+{
+    color: black;
+}
