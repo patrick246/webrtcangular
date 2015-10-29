@@ -1,5 +1,5 @@
 angular.module('de.patrick246.webrtc.modules.login.services')
-	.factory('UserManager', function ($rootScope)
+	.factory('AuthManager', function ($rootScope)
 	{
 		var users = [
 			{firstname: 'Patrick', lastname: "Hahn", username: "patrick246", avatar: 'img/users/patrick246.jpg'},
@@ -10,7 +10,7 @@ angular.module('de.patrick246.webrtc.modules.login.services')
 			avatar: 'img/users/no_profile.png'
 		};
 
-		var user_manager = {
+		var auth_manager = {
 			userdata: default_userdata,
 			is_logged_in: false,
 			login_token: '',
@@ -37,7 +37,7 @@ angular.module('de.patrick246.webrtc.modules.login.services')
 			},
 			save_state: function ()
 			{
-				localStorage.Usermanager = angular.toJson({
+				localStorage.Authmanager = angular.toJson({
 					is_logged_in: this.is_logged_in,
 					userdata: this.userdata,
 					login_token: this.login_token
@@ -51,15 +51,15 @@ angular.module('de.patrick246.webrtc.modules.login.services')
 			}
 		};
 
-		if(localStorage.Usermanager !== undefined)
+		if(localStorage.Authmanager !== undefined)
 		{
-			user_manager.restore_state(angular.fromJson(localStorage.Usermanager));
+			auth_manager.restore_state(angular.fromJson(localStorage.Authmanager));
 		}
 
 		$rootScope.$on('savestate', function ()
 		{
-			user_manager.save_state();
+			auth_manager.save_state();
 		});
 
-		return user_manager;
+		return auth_manager;
 	});

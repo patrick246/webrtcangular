@@ -14,7 +14,7 @@
     <script src="js/login-module/index.js"></script>
     <script src="js/login-module/controllers/LoginDialogCtrl.js"></script>
     <script src="js/login-module/services/index.js"></script>
-    <script src="js/login-module/services/UserManager.js"></script>
+    <script src="js/login-module/services/AuthManager.js"></script>
 
     <script src="js/sidenav-module/index.js"></script>
     <script src="js/sidenav-module/services/index.js"></script>
@@ -55,13 +55,13 @@
     <div layout="row" flex>
         <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
             <div class="sidenav-backdrop" layout="column" layout-align="space-between" ng-controller="UserInfoCtrl">
-                <md-button class="md-fab user-bg" style="background-image: url({{usermanager.userdata.avatar}})" aria-label="Profilfoto">
+                <md-button class="md-fab user-bg" style="background-image: url({{authmanager.userdata.avatar}})" aria-label="Profilfoto">
                 </md-button>
 
-                <div layout-padding layout="row" layout-align="space-between center"  ng-if="usermanager.is_logged_in">
+                <div layout-padding layout="row" layout-align="space-between center"  ng-if="authmanager.is_logged_in">
                     <span>
-                        <span class="user-info__fullname">{{usermanager.userdata.firstname}} {{usermanager.userdata.lastname}}</span>
-                        <span class="user-info__username">({{usermanager.userdata.username}})</span>
+                        <span class="user-info__fullname">{{authmanager.userdata.firstname}} {{authmanager.userdata.lastname}}</span>
+                        <span class="user-info__username">({{authmanager.userdata.username}})</span>
                     </span>
                     <md-menu>
                         <md-icon md-font-icon="material-icons" ng-click="$mdOpenMenu($event)">

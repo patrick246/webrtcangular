@@ -1,5 +1,5 @@
 angular.module('de.patrick246.webrtc.modules.sidenav.controller')
-	.controller('SidenavCtrl', function ($scope, $location, $mdDialog, UserManager, SideNavMenuProvider)
+	.controller('SidenavCtrl', function ($scope, $location, $mdDialog, AuthManager, SideNavMenuProvider)
 	{
 		$scope.go = function (where)
 		{

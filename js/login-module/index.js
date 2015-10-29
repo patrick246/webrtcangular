@@ -6,9 +6,9 @@ angular.module('de.patrick246.webrtc.modules.login', ['ngMaterial', 'de.patrick2
 				controller: function(){},
 				resolve:
 				{
-					data1: function ($mdDialog, $location, UserManager, SideNavMenuProvider)
+					data1: function ($mdDialog, $location, AuthManager, SideNavMenuProvider)
 					{
-						if(!UserManager.is_logged_in)
+						if(!AuthManager.is_logged_in)
 						{
 							return $mdDialog.show({
 								controller: LoginDialogCtrl,
@@ -17,7 +17,7 @@ angular.module('de.patrick246.webrtc.modules.login', ['ngMaterial', 'de.patrick2
 								targetEvent: null,
 								clickOutsideToClose: false
 							}).then(function (answer) {
-								if(UserManager.login_as(answer.username, answer.password))
+								if(AuthManager.login_as(answer.username, answer.password))
 								{
 									SideNavMenuProvider.change_set('user');
 									$location.path('/');
@@ -44,9 +44,9 @@ angular.module('de.patrick246.webrtc.modules.login', ['ngMaterial', 'de.patrick2
 				controller: function () {},
 				resolve:
 				{
-					data1: function ($mdToast, UserManager, SideNavMenuProvider)
+					data1: function ($mdToast, AuthManager, SideNavMenuProvider)
 					{
-						UserManager.logout();
+						AuthManager.logout();
 						SideNavMenuProvider.change_set('visitor');
 						return $mdToast.show($mdToast.simple().content('Logging you out')).then(function ()
 						{

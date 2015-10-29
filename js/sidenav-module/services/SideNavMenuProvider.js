@@ -1,5 +1,5 @@
 angular.module('de.patrick246.webrtc.modules.sidenav.services')
-	.factory('SideNavMenuProvider', function ($location, $mdDialog, UserManager) {
+	.factory('SideNavMenuProvider', function ($location, $mdDialog, AuthManager) {
 		var menu_sets = {
 			visitor: [
 				{
@@ -38,7 +38,7 @@ angular.module('de.patrick246.webrtc.modules.sidenav.services')
 			]
 		};
 		return {
-			active_set: UserManager.is_logged_in ? menu_sets.user : menu_sets.visitor,
+			active_set: AuthManager.is_logged_in ? menu_sets.user : menu_sets.visitor,
 			change_set: function (new_set)
 			{
 				this.active_set = menu_sets[new_set];

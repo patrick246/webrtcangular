@@ -1,7 +1,6 @@
 angular.module('de.patrick246.webrtc.modules.sidenav.controller')
-	.controller('UserInfoCtrl', function ($scope, UserManager)
+	.controller('UserInfoCtrl', function ($scope, AuthManager)
 	{
-		//UserManager.login_as('patrick246', '');
-		$scope.userdata = UserManager.userdata;
-		$scope.usermanager = UserManager;
+		$scope.userdata = AuthManager.userdata;
+		$scope.authmanager = AuthManager;
 	});
