@@ -144,12 +144,280 @@
         }
       }
 
+    },
+    "/contacts/{id}": {
+      "get": {
+        "tags": ["contacts"],
+        "summary": "Get User by ID",
+        "parameters": [
+          {"$ref": "#/definitions/TokenDep"},
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact",
+            "schema": {
+              "$ref": "#/definitions/ContactModel"
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/NotLoggedInError"
+          },
+          "404": {
+            "$ref": "#/definitions/UserNotFoundError"
+          }
+        }
+      }
+    },
+    "/contacts/add": {
+      "post": {
+        "tags": ["contacts"],
+        "summary": "Add User to Contact Book",
+        "parameters": [
+          {"$ref": "#/definitions/TokenDep"},
+          {
+            "name": "id",
+            "in": "body",
+            "description": "ID of the user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/StatusObjectModel"
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/NotLoggedInError"
+          },
+          "404": {
+            "$ref": "#/definitions/UserNotFoundError"
+          }
+        }
+      }
+    },
+    "/contacts/remove": {
+      "post": {
+        "tags": ["contacts"],
+        "summary": "Remove user from Contact Book",
+        "parameters": [
+          {"$ref": "#/definitions/TokenDep"},
+          {
+            "name": "userid",
+            "in": "body",
+            "description": "ID of the user",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shows whether the user could be removed from the contact book",
+            "schema": {
+              "$ref": "#/definitions/StatusObjectModel"
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/NotLoggedInError"
+          },
+          "404": {
+            "$ref": "#/definitions/UserNotFoundError"
+          }
+        }
+      }
+    },
+    "/contacts/requests": {
+      "get": {
+        "tags": ["contacts"],
+        "summary": "Shows all pending Contact Book requests",
+        "parameters": [{"$ref": "#/definitions/TokenDep"}],
+        "responses": {
+          "200": {
+            "description": "List of Contacts",
+            "schema": {
+              "type": "object",
+              "required": ["status", "payload"],
+              "properties": {
+                "status": {
+                  "$ref": "#/definitions/StatusModel"
+                },
+                "payload": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ContactModel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/NotLoggedInError"
+          }
+        }
+      }
+    },
+    "/messages/since": {
+      "get": {
+        "tags": ["messages"],
+        "summary": "Get Messages not older than datetime",
+        "parameters": [
+          {"$ref": "#/definitions/TokenDep"},
+          {
+            "name": "datetime",
+            "in": "query",
+            "description": "Date and time in RFC3339 format",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Messages",
+            "schema": {
+              "type": "object",
+              "required": ["status", "payload"],
+              "properties": {
+                "status": {
+                  "$ref": "#/definitions/StatusModel"
+                },
+                "payload": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/MessageModel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/NotLoggedInError"
+          }
+        }
+      }
+    },
+    "/messages/archive/{userid}": {
+      "get": {
+        "tags": ["messages"],
+        "summary": "Get Messages from and to user no older than datetime",
+        "parameters": [
+          {"$ref": "#/definitions/TokenDep"},
+          {
+            "name": "userid",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "datetime",
+            "in": "query",
+            "description": "Date and time in RFC3339 format",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Messages",
+            "schema": {
+              "type": "object",
+              "required": ["status", "payload"],
+              "properties": {
+                "status": {
+                  "$ref": "#/definitions/StatusModel"
+                },
+                "payload": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/MessageModel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/NotLoggedInError"
+          },
+          "404": {
+            "$ref": "#/definitions/UserNotFoundError"
+          }
+        }
+      }
+    },
+    "/messages/send": {
+      "post": {
+        "tags": ["messages"],
+        "summary": "Send a message",
+        "consumes": ["text/plain", "application/json"],
+        "parameters": [
+          {"$ref":"#/definitions/TokenDep"},
+          {
+            "name": "receiver",
+            "in": "body",
+            "description": "Receiver ID",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+            "consumes": ["text/plain"]
+          },
+          {
+            "name": "content",
+            "in": "body",
+            "description": "Message content",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "Additional data like a picture or a geolocation",
+            "required": false,
+            "type": "string",
+            "format": "byte"
+          }
+        ]
+      }
     }
   },
   "definitions": {
+    "NotLoggedInError": {
+      "description": "Not logged in",
+      "schema": {
+        "$ref": "#/definitions/ErrorModel"
+      }
+    },
+    "UserNotFoundError": {
+      "description": "User not found",
+      "schema": {
+        "$ref": "#/definitions/ErrorModel"
+      }
+    },
     "StatusModel": {
       "type": "string",
       "description": "'success' or 'failure'"
+    },
+    "StatusObjectModel": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/StatusModel"
+        }
+      }
     },
     "ErrorModel": {
       "type": "object",
@@ -197,6 +465,41 @@
         },
         "lastname": {
           "type": "string"
+        }
+      }
+    },
+    "MessageModel": {
+      "type": "object",
+      "required": ["id", "sender", "content"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Message ID"
+        },
+        "sender": {
+          "type": "integer",
+          "format": "in64",
+          "description": "Sender ID"
+        },
+        "receiver": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Receiver ID"
+        },
+        "content": {
+          "type": "string",
+          "description": "Message content"
+        },
+        "payload": {
+          "type": "string",
+          "format": "byte",
+          "description": "Additional data like a picture or location"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The time the message was sent"
         }
       }
     }
