@@ -22,7 +22,7 @@
   "produces": ["application/json"],
   "paths": {
     "/auth/login": {
-      "get": {
+      "post": {
         "tags": ["authentication"],
         "summary": "Logs the user in",
         "parameters": [
@@ -45,8 +45,11 @@
             "description": "Authentication Token",
             "schema": {
               "type": "object",
-              "required": ["token"],
+              "required": ["status", "token"],
               "properties": {
+                "status": {
+                  "$ref": "#/definitions/StatusModel"
+                },
                 "token": {
                   "type": "string",
                   "description": "This Token is used to identify the caller"
