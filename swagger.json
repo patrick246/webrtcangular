@@ -1,0 +1,204 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "WebRTC API",
+    "description": "This API can be used to interface with the WebRTC project",
+    "termsOfService": "",
+    "contact": {
+      "name": "patrick246",
+      "url": "",
+      "email": "api-support@patrick246.de"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "version": "1.0.0"
+  },
+  "host": "localhost",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/auth/login": {
+      "get": {
+        "tags": ["authentication"],
+        "summary": "Logs the user in",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "format": "password"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authentication Token",
+            "schema": {
+              "type": "object",
+              "required": ["token"],
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "description": "This Token is used to identify the caller"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The supplied credentials were invalid",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["authentication"],
+        "summary": "Logs the user out",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "description": "Authentication Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logout was successful",
+            "schema": {
+              "type": "object",
+              "required": ["status"],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Should be true for successful logout"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Logout was not successful, because no one was logged int",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          },
+          "default": {
+            "description": "Unknown Error during logout",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        }
+      }
+    },
+    "/contacts": {
+      "get": {
+        "tags": ["contacts"],
+        "summary": "List all users in the user's contact book",
+        "parameters": [{"$ref": "#/definitions/TokenDep"}],
+        "responses": {
+          "200": {
+            "description": "List of Contacts",
+            "schema": {
+              "type": "object",
+              "required": ["status", "payload"],
+              "properties": {
+                "status": {
+                  "$ref": "#/definitions/StatusModel"
+                },
+                "payload": {
+                  "type": "array",
+                  "items":  {
+                    "$ref": "#/definitions/ContactModel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not logged in",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        }
+      }
+
+    }
+  },
+  "definitions": {
+    "StatusModel": {
+      "type": "string",
+      "description": "'success' or 'failure'"
+    },
+    "ErrorModel": {
+      "type": "object",
+      "required": ["status", "level", "code", "message"],
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/StatusModel"
+        },
+        "level": {
+          "type": "string",
+          "description": "Serverity of the error"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int64",
+          "description": "computer readable representation of the error"
+        },
+        "message": {
+          "type": "string",
+          "description": "Human readable representation of the error"
+        }
+      }
+    },
+    "TokenDep": {
+      "name": "token",
+      "in": "header",
+      "required": false,
+      "type": "string",
+      "description": "Authentication Token"
+    },
+    "ContactModel": {
+      "type": "object",
+      "required": ["id", "username"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "minValue": 0
+        },
+        "username": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
