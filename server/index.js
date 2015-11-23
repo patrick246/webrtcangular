@@ -11,6 +11,8 @@ app.use(express.static(__dirname + '/../'));
 
 var router = express.Router();
 
+var sessions = {};
+
 router.get('/', function (req, res)
 {
 	res.json({message: 'hello world'});
@@ -33,6 +35,12 @@ router.post('/auth/login', function (req, res)
 	crypto.randomBytes(64, function (ex, buf)
 	{
 		var token = buf.toString('hex');
+
+		sessions[token] = {
+			username: req.headers.username,
+			ip: req.connection.remoteAddress
+		};
+
 		res.cookie('Token', token, { maxAge: 3600*24*7, httpOnly: true });
 		res.json({status:'success', token: token});
 	});
@@ -76,6 +84,13 @@ router.get('/messages/archive/{userid}', function (req, res)
 router.post('/messages/send', function (req, res)
 {
 
+});
+
+router.get('/debug/logsessions', function (req, res)
+{
+	console.log(sessions);
+	res.json(sessions);
+	res.end();
 });
 
 app.use('/api', router);
