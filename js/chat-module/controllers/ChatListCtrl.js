@@ -39,7 +39,6 @@ angular.module('de.patrick246.webrtc.modules.chats.controllers')
 
 		$scope.list_search = function (value)
 		{
-			console.log(value, $scope.search);
 			if(!value.is_group)
 			{
 				return (value.firstname + " " + value.lastname + " " + value.username).toLowerCase().indexOf($scope.search.toLowerCase()) !== -1;
