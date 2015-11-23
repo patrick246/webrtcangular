@@ -17,15 +17,16 @@ angular.module('de.patrick246.webrtc.modules.login', ['ngMaterial', 'de.patrick2
 								targetEvent: null,
 								clickOutsideToClose: false
 							}).then(function (answer) {
-								if(AuthManager.login_as(answer.username, answer.password))
+								AuthManager.login_as(answer.username, answer.password).then(function(response)
 								{
 									SideNavMenuProvider.change_set('user');
 									$location.path('/');
-								}
-								else
+								},
+								function(reponse)
 								{
+									console.error(response);
 									$location.path('/login/failed');
-								}
+								});
 
 							});
 						}
@@ -44,14 +45,20 @@ angular.module('de.patrick246.webrtc.modules.login', ['ngMaterial', 'de.patrick2
 				controller: function () {},
 				resolve:
 				{
-					data1: function ($mdToast, AuthManager, SideNavMenuProvider)
+					data1: function ($mdToast, AuthManager, SideNavMenuProvider, $location)
 					{
-						AuthManager.logout();
-						SideNavMenuProvider.change_set('visitor');
-						return $mdToast.show($mdToast.simple().content('Logging you out')).then(function ()
+						AuthManager.logout().then(function (response)
 						{
-							$location.path('/');
+							SideNavMenuProvider.change_set('visitor');
+							return $mdToast.show($mdToast.simple().content('Logging you out')).then(function ()
+							{
+								$location.path('/');
+							});
+						}, function (response)
+						{
+							console.error(response);
 						});
+
 					}
 				}
 			});

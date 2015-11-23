@@ -1,5 +1,5 @@
 angular.module('de.patrick246.webrtc.modules.login.services')
-	.factory('AuthManager', function ($rootScope)
+	.factory('AuthManager', function ($rootScope, $resource, ApiProvider)
 	{
 		var users = [
 			{firstname: 'Patrick', lastname: "Hahn", username: "patrick246", avatar: 'img/users/patrick246.jpg'},
@@ -17,23 +17,23 @@ angular.module('de.patrick246.webrtc.modules.login.services')
 
 			login_as: function (username, password)
 			{
-				console.log(users);
-				var u = users.filter(function (elem)
+				var this_ = this;
+				return ApiProvider.login(username, password).then(function (response)
 				{
-					return elem.username === username;
+					this_.userdata = users[0];
+					this_.is_logged_in = true;
 				});
-				if(u === undefined || u === [])
-					return false;
-				this.userdata = u[0];
-				this.is_logged_in = true;
-				return true;
 			},
 			logout: function ()
 			{
-				this.login_token = '';
-				this.userdata = default_userdata;
-				this.is_logged_in = false;
-				this.save_state();
+				var this_ = this;
+				return ApiProvider.logout().then(function ()
+				{
+					this_.login_token = '';
+					this_.userdata = default_userdata;
+					this_.is_logged_in = false;
+					this_.save_state();
+				});
 			},
 			save_state: function ()
 			{

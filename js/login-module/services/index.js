@@ -1,1 +1,1 @@
-angular.module('de.patrick246.webrtc.modules.login.services', []);
+angular.module('de.patrick246.webrtc.modules.login.services', ['de.patrick246.webrtc.modules.common.services']);
